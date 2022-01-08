@@ -1,0 +1,41 @@
+\documentclass{article}
+\usepackage[T1]{fontenc}
+\usepackage{booktabs}
+\usepackage[margin=1in]{geometry}
+\begin{document}
+
+
+
+\begin{table*}[t!]
+\vspace{-3mm}
+\caption{SSL Comparison: cifar: Average (standard deviation) classification accuracy over 12 trials.}
+\vspace{-3mm}
+\label{tab:SSL Comparison: cifar}
+\vskip 0.15in
+\begin{center}
+\begin{small}
+\begin{sc}
+\begin{tabular}{llllll}
+\toprule
+\# Labels&\textbf{10}&\textbf{20}&\textbf{30}&\textbf{40}&\textbf{50}\\
+\midrule
+Laplace Learning&10.1 (0.1)      &10.5 (0.4)      &10.5 (0.4)      &15.7 (5.7)      &15.8 (5.4)      \\
+Poisson Learning&{\bf 39.7 (7.3)}&47.9 (4.6)      &51.0 (2.4)      &52.7 (2.7)      &{\bf 54.0 (2.9)}\\
+p-eikonal (p=1.00, alpha=0.00)&33.7 (5.2)      &42.0 (4.7)      &44.6 (5.1)      &47.7 (3.8)      &48.5 (3.8)      \\
+p-eikonal (p=1.00, alpha=0.00)+CP&39.3 (6.2)      &{\bf 48.2 (5.1)}&{\bf 51.0 (2.2)}&{\bf 53.3 (3.3)}&52.6 (3.3)      \\
+p-eikonal (p=1.00, alpha=1.00)&32.4 (5.5)      &41.9 (4.9)      &43.2 (5.2)      &46.3 (4.0)      &47.3 (3.8)      \\
+p-eikonal (p=1.00, alpha=1.00)+CP&38.8 (6.3)      &48.0 (5.4)      &50.5 (2.1)      &52.9 (3.2)      &52.3 (3.3)      \\
+p-eikonal (p=1.00, alpha=2.00)&30.8 (6.4)      &40.9 (5.3)      &41.5 (5.1)      &44.4 (4.2)      &45.7 (3.9)      \\
+p-eikonal (p=1.00, alpha=2.00)+CP&38.2 (6.5)      &47.7 (5.6)      &50.0 (2.0)      &52.2 (3.1)      &51.9 (3.2)      \\
+p-eikonal (p=1.00, alpha=3.00)&29.4 (6.9)      &39.1 (5.4)      &39.3 (4.9)      &42.1 (4.3)      &43.9 (4.1)      \\
+p-eikonal (p=1.00, alpha=3.00)+CP&37.7 (6.6)      &47.1 (5.7)      &49.4 (2.0)      &51.4 (3.1)      &51.3 (3.1)      \\
+\bottomrule
+\end{tabular}
+\end{sc}
+\end{small}
+\end{center}
+\vskip -0.1in
+\end{table*}
+
+
+\end{document}

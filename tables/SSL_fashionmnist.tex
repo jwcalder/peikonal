@@ -1,0 +1,41 @@
+\documentclass{article}
+\usepackage[T1]{fontenc}
+\usepackage{booktabs}
+\usepackage[margin=1in]{geometry}
+\begin{document}
+
+
+
+\begin{table*}[t!]
+\vspace{-3mm}
+\caption{SSL Comparison: fashionmnist: Average (standard deviation) classification accuracy over 12 trials.}
+\vspace{-3mm}
+\label{tab:SSL Comparison: fashionmnist}
+\vskip 0.15in
+\begin{center}
+\begin{small}
+\begin{sc}
+\begin{tabular}{llllll}
+\toprule
+\# Labels&\textbf{10}&\textbf{20}&\textbf{30}&\textbf{40}&\textbf{50}\\
+\midrule
+Laplace Learning&20.7 (9.4)      &29.4 (5.9)      &38.0 (10.5)      &50.2 (6.1)      &58.3 (6.3)      \\
+Poisson Learning&{\bf 60.6 (3.1)}&{\bf 64.1 (3.7)}&{\bf 68.0 (3.5)}&{\bf 71.2 (2.5)}&{\bf 71.3 (1.7)}\\
+p-eikonal (p=1.00, alpha=0.00)&54.6 (4.7)      &56.7 (4.4)      &62.8 (2.6)      &65.4 (2.9)      &65.2 (1.3)      \\
+p-eikonal (p=1.00, alpha=0.00)+CP&56.2 (4.5)      &59.2 (3.9)      &63.9 (2.4)      &66.5 (2.6)      &66.0 (1.5)      \\
+p-eikonal (p=1.00, alpha=1.00)&53.9 (5.0)      &56.6 (4.0)      &62.2 (2.9)      &65.1 (2.8)      &65.2 (1.8)      \\
+p-eikonal (p=1.00, alpha=1.00)+CP&57.6 (5.0)      &60.5 (4.1)      &65.1 (2.3)      &67.8 (2.2)      &67.1 (1.7)      \\
+p-eikonal (p=1.00, alpha=2.00)&51.6 (6.2)      &55.4 (4.0)      &60.2 (3.2)      &63.4 (3.3)      &63.6 (2.9)      \\
+p-eikonal (p=1.00, alpha=2.00)+CP&58.0 (5.3)      &61.2 (3.9)      &65.5 (2.4)      &68.1 (1.9)      &67.5 (1.7)      \\
+p-eikonal (p=1.00, alpha=3.00)&48.9 (7.4)      &54.0 (4.5)      &58.0 (3.3)      &61.0 (3.6)      &61.6 (3.8)      \\
+p-eikonal (p=1.00, alpha=3.00)+CP&57.6 (5.7)      &61.3 (3.4)      &64.9 (2.8)      &67.7 (1.9)      &67.4 (1.6)      \\
+\bottomrule
+\end{tabular}
+\end{sc}
+\end{small}
+\end{center}
+\vskip -0.1in
+\end{table*}
+
+
+\end{document}
