@@ -23,7 +23,12 @@ model_list = [gl.ssl.laplace(W),
               gl.ssl.peikonal(W, D=D, p=1, alpha=0, class_priors=gl.utils.class_priors(labels)),
               gl.ssl.peikonal(W, D=D, p=1, alpha=1, class_priors=gl.utils.class_priors(labels)),
               gl.ssl.peikonal(W, D=D, p=1, alpha=2, class_priors=gl.utils.class_priors(labels)),
-              gl.ssl.peikonal(W, D=D, p=1, alpha=3, class_priors=gl.utils.class_priors(labels))]
+              gl.ssl.peikonal(W, D=D, p=1, alpha=3, class_priors=gl.utils.class_priors(labels)),
+              gl.ssl.graph_nearest_neighbor(W, D=D, alpha=0, class_priors=gl.utils.class_priors(labels)),
+              gl.ssl.graph_nearest_neighbor(W, D=D, alpha=1, class_priors=gl.utils.class_priors(labels)),
+              gl.ssl.graph_nearest_neighbor(W, D=D, alpha=2, class_priors=gl.utils.class_priors(labels)),
+              gl.ssl.graph_nearest_neighbor(W, D=D, alpha=3, class_priors=gl.utils.class_priors(labels))]
+
 
 #Run experiments 
 for model in model_list:
