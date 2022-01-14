@@ -11,14 +11,15 @@ import random
 import time
 
 
-
-# non-unoform sampling: multivariate Gaussioans
+# non-unoform sampling: superposition of two Gaussioans
 def nonUnifSample(n):
+    
     X = np.zeros((n,2))
     ng = int(round(n/2))
 
     m1 = [0, 0]            # mean vector for G1
     c1 = [[1, 0], [0, 1]]  # diagonal covariance for G1
+    
     m2 = [2, 2]               # mean vector for G2
     c2 = [[0.4, 0], [0, .2]]  # diagonal covariance for G2
     
@@ -27,21 +28,6 @@ def nonUnifSample(n):
     X[ng:n,0], X[ng:n,1] = np.random.multivariate_normal(m2, c2, n-ng).T
 
     return X
-
-# find index of median
-def findMedianIndx(size_random_set,u):
-    n = len(u)
-    ind_median_set = random.sample(range(n), size_random_set)
-    ind_median_set.sort()
-    UM = np.zeros(size_random_set)
-    for i in range(size_random_set):
-        ui = u[ind_median_set[i]]
-        s = 0
-        for j in range(size_random_set):
-            uj = u[ind_median_set[j]]
-            s = s + abs(ui-uj)
-        UM[i] = s/n
-    return np.argmin(UM)
 
 
 # calculate residual 
@@ -54,18 +40,14 @@ def residualCal(W,ind,u,f,p):
     return np.max(np.absolute(F))
 
 
-
 n = 5000
 X = nonUnifSample(n)
-
-ind_boundary = random.sample(range(n), 1) # select one boundary point randomly
-
 
 eps = 1
 W = gl.eps_weight_matrix(X,eps)
 if not gl.isconnected(W):
     print("Graph not connected")
-I,J,V = sparse.find(W)  #Indices of nonzero entries
+I,J,D = sparse.find(W)  #Indices of nonzero entries
 
 p = 1
 alpha = 3
@@ -76,51 +58,51 @@ f = np.ones(n)
 d = gl.degrees(W) 
 f = (d/np.max(d))**alpha
 
-# cpeikonal
-gb = np.zeros((len(ind_boundary),))
+fig = plt.figure(figsize=(5,5))
+ax = fig.add_subplot(1, 1, 1)
+plt.scatter(X[0:n,0], X[0:n,1], color='black',s=0.5, marker='.')
+ax.legend(['data set'])
+plt.axis('equal')
+plt.show()
+
+
+randomSetSize = int(np.round(0.1*n))
+print("--- %s random set size ---\n" % randomSetSize)
+
+peikonal_median_sum = []
+peikonal_median_max = []
+peikonal_median_med = []
+
+ind_boundary_points = []
+
 start_time = time.time()
-u = gl.cpeikonal(W, ind_boundary, p=p, f=f, g=gb, max_num_it=1e5, converg_tol=1e-6, num_bisection_it=30, prog=False)
-res = residualCal(W,ind_boundary,u,f,p)
-print('Residual for cpeikonal: ',res)
-print("--- %s seconds ---\n" % (time.time() - start_time))
+for ind in range(randomSetSize):
+    ind_boundary = random.sample(range(n), 1)
+    ind_boundary_points.append(ind_boundary[0])
+    gb = np.zeros((len(ind_boundary),))
+    u = gl.cpeikonal(W, ind_boundary, p=p, f=f, g=gb, max_num_it=1e5, converg_tol=1e-5, num_bisection_it=30, prog=False)
+    
+    peikonal_median_sum.append(np.sum(u))
+    peikonal_median_max.append(np.max(u))
+    peikonal_median_med.append(np.median(u))
+    
+    x = ind % 100
+    if (x == 0):
+        print("--- %s seconds ---\n" % (time.time() - start_time))
 
 
-# compute median (currently seach on all data set, will be updated by selecting a random set of data)
-fact = 0.1 # fraction of data set for median detection
-size_random_set = int(round(fact*n))
-index_medin = findMedianIndx(size_random_set,u)
+index_median_sum = np.argmin(peikonal_media_sum)
+index_median_max = np.argmin(peikonal_media_max)
+index_median_med = np.argmin(peikonal_media_med)
 
 
 fig = plt.figure(figsize=(5,5))
 ax = fig.add_subplot(1, 1, 1)
 plt.scatter(X[0:n,0], X[0:n,1], color='black',s=0.5, marker='.')
-plt.scatter(X[ind_boundary,0], X[ind_boundary,1], color='red',s=100, marker='.')
-plt.scatter(X[index_medin,0], X[index_medin,1], color='blue',s=100, marker='.')
-ax.legend(['data set', 'boundary point','median'])
+plt.scatter(X[ind_boundary_points,0], X[ind_boundary_points,1], color='red',s=1, marker='.')
+plt.scatter(X[index_median_sum,0], X[index_median_sum,1], color='blue',s=500, marker='.')
+plt.scatter(X[index_median_max,0], X[index_median_max,1], color='darkgreen',s=500, marker='.')
+plt.scatter(X[index_median_med,0], X[index_median_med,1], color='maroon',s=500, marker='.')
+ax.legend(['data points', 'random points', 'sum criteria','max criteria','median criteria'])
 plt.axis('equal')
-plt.show()
-
-
-fig = plt.figure(figsize=(5,5))
-ax = fig.add_subplot(1, 1, 1)
-ax.scatter(X[:,0],X[:,1], c=u,s=1)
-plt.show()
-
-
-
-plt.ion()
-plt.close('all')
-ecolor = 0.4
-linewidth = 0
-aa = False
-my_cmap = plt.get_cmap('jet')
-Tri = gl.mesh(X)
-fig = plt.figure(figsize=(5,5))
-ax = fig.add_subplot(1,1,1,projection='3d')
-ax.plot_trisurf(X[:,0],X[:,1],u,triangles = Tri,cmap=my_cmap,edgecolors=(ecolor,ecolor,ecolor),linewidth=0.1,antialiased=aa)
-ax.plot_trisurf(X[:,0],X[:,1],u,triangles = Tri,cmap=my_cmap,edgecolors=(ecolor,ecolor,ecolor),linewidth=linewidth,antialiased=aa)
-# ax.view_init(elev=-160,azim=-45)
-plt.axis('off')
-plt.tight_layout()
-plt.savefig('multivariate_Gaussian.eps')
 plt.show()
