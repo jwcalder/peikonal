@@ -32,7 +32,7 @@ def nonUnifSample(n,dataID):
 p = 1
 alpha = -0.5
 
-dataID = 3 
+dataID = 1 
             # if numGroup = 1 then multivariate Gaussian 
             # if numGroup = 2 then mixture of multivariate Gausian 
             # if numGroup = 3 then two moon-data set 
