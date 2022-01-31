@@ -13,7 +13,7 @@ markers = ['v','s','^']
 
 frac=0.05
 seed=0
-alpha=2
+alpha=1
 n=1000
 eps = 1
 
