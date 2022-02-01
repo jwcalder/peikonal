@@ -24,6 +24,22 @@ def half_moon(n, shift=0.4):
 
     return X
 
+
+def half_helix(n):
+    X = np.zeros((n,3))
+    t = 0
+    dt = 2*np.pi/n
+    num_pts = 0
+    while num_pts < n:
+        X[num_pts,0] = np.sin(t)
+        X[num_pts,1] = np.cos(t)
+        X[num_pts,2] = t
+        t += dt
+        num_pts += 1
+        
+    return X
+
+
 def peikonal_depth(G, kde, frac, alpha):
 
     n = G.num_nodes
@@ -42,5 +58,3 @@ def peikonal_depth(G, kde, frac, alpha):
     depth = G.peikonal([median],f=f)
 
     return median, depth
-
-
