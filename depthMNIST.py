@@ -3,7 +3,6 @@ import graphlearning as gl
 import matplotlib.pyplot as plt
 import sklearn.datasets as datasets
 from utils import peikonal_depth
-from utils import half_moon
 import sys
 
 
