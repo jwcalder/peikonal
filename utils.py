@@ -24,7 +24,10 @@ def half_moon(n, shift=0.4):
 
     return X
 
-def peikonal_depth(G, kde, frac, alpha):
+def peikonal_depth(G, kde, frac, alpha, seed=None):
+
+    if seed is not None:
+        np.random.seed(seed)
 
     n = G.num_nodes
     num_cand = int(frac*n)
