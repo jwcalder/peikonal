@@ -34,7 +34,7 @@ for label in range(10):
     num = X_sub.shape[0]
 
     #KNN search
-    knn_ind, knn_dist = gl.weightmatrix.knnsearch(X_sub,5*k)
+    knn_ind, knn_dist = gl.weightmatrix.knnsearch(X_sub,20*k)
     W = gl.weightmatrix.knn(X_sub,k,knn_data=(knn_ind,knn_dist))
     G = gl.graph(W)
     if not G.isconnected():
