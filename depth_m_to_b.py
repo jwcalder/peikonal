@@ -5,6 +5,7 @@ import sklearn.datasets as datasets
 from utils import peikonal_depth
 import sys
 
+load_saved = False
 
 dataset = 'mnist'
 k = 10
@@ -33,17 +34,25 @@ for label in range(10):
     X_sub = X[labels==label,:]
     num = X_sub.shape[0]
 
-    #KNN search
-    knn_ind, knn_dist = gl.weightmatrix.knnsearch(X_sub,20*k)
-    W = gl.weightmatrix.knn(X_sub,10,knn_data=(knn_ind,knn_dist))
-    G = gl.graph(W)
-    if not G.isconnected():
-        sys.exit('Graph is not connected')
-    d = np.max(knn_dist,axis=1)
-    kde = (d/d.max())**(-1)
-    
-    alpha = 1
-    median, depth = peikonal_depth(G, kde, frac, alpha)
+    if load_saved:
+        M = np.load('digit%d_depth.npz'%label)
+        depth=M['depth']
+        median=M['median']
+        knn_ind=M['knn_ind']
+    else:
+        #KNN search
+        knn_ind, knn_dist = gl.weightmatrix.knnsearch(X_sub,5*k)
+        W = gl.weightmatrix.knn(X_sub,k,knn_data=(knn_ind,knn_dist))
+        G = gl.graph(W)
+        if not G.isconnected():
+            sys.exit('Graph is not connected')
+        d = np.max(knn_dist,axis=1)
+        kde = (d/d.max())**(-1)
+        
+        alpha = 1
+        median, depth = peikonal_depth(G, kde, frac, alpha)
+        np.savez_compressed('digit%d_depth.npz'%label,median=median,depth=depth,knn_ind=knn_ind)
+
     depth = depth/np.max(depth)
     depth = 1-depth
     

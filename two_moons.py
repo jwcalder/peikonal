@@ -11,7 +11,7 @@ vmax = 1.5
 #cmap = 'copper'
 #cmap = 'winter'
 cmap = 'viridis'
-label_color = 'r'
+label_color = 'w'
 marker = "^"
 
 X,labels = datasets.make_moons(n_samples=500,noise=0.1,random_state=0)
@@ -35,12 +35,12 @@ for alpha in [-1,0,1]:
 
         plt.figure()
         plt.scatter(X[:,0],X[:,1], c=pred_labels, s=size, cmap=cmap, vmin=vmin, vmax=vmax)
-        plt.scatter(X[train_ind,0],X[train_ind,1], c=label_color, s=10*size, marker=marker, edgecolors='black')
+        plt.scatter(X[train_ind,0],X[train_ind,1], c=label_color, s=15*size, marker=marker, edgecolors='black', linewidth=3)
         plt.axis('off')
         plt.savefig('figures/twomoons_priors_%.2f_%d_%d.pdf'%(accuracy,seed,alpha))
 
         plt.figure()
         plt.scatter(X[:,0],X[:,1], c=pred_labels_wo, s=size, cmap=cmap, vmin=vmin, vmax=vmax)
-        plt.scatter(X[train_ind,0],X[train_ind,1], c=label_color, s=10*size, marker=marker, edgecolors='black')
+        plt.scatter(X[train_ind,0],X[train_ind,1], c=label_color, s=15*size, marker=marker, edgecolors='black', linewidth=3)
         plt.axis('off')
         plt.savefig('figures/twomoons_nopriors%.2f_%d_%d.pdf'%(accuracy_wo,seed,alpha))

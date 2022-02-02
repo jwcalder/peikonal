@@ -48,6 +48,11 @@ for dataset in ['mnist','fashionmnist','cifar']:
 
     if dataset == 'mnist':
         plt.ylim((50,100))
+    if dataset == 'fashionmnist':
+        plt.ylim((40,72))
+    if dataset == 'cifar':
+        plt.ylim((20,55))
+
     plt.xlabel('Number of labels',fontsize=label_fontsize)
     plt.ylabel('Accuracy (%)',fontsize=label_fontsize)
     plt.legend(loc='lower right',fontsize=legend_fontsize)

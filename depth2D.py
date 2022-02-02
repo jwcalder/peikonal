@@ -7,7 +7,7 @@ from utils import half_moon
 import sys
 
 size = 10
-label_color = 'r'
+label_color = 'w'
 
 frac=0.05
 seed=0
@@ -15,9 +15,9 @@ alpha=2
 n=1000
 eps = 1
 
-#dataset = 'gaussian'
+dataset = 'gaussian'
 #dataset = 'moon'
-dataset = 'mixture'
+#dataset = 'mixture'
 
 np.random.seed(seed)
 if dataset == 'gaussian':
@@ -55,9 +55,9 @@ for k, alpha in enumerate([-1,0,1]):
 
 plt.figure()
 plt.scatter(X[:,0],X[:,1], s=size, c=depth)
-plt.scatter(X[medians[1],0],X[medians[1],1], c=label_color, marker='s', s=10*size, edgecolors='black')
-plt.scatter(X[medians[0],0],X[medians[0],1], c=label_color, marker='v', s=15*size, edgecolors='black')
-plt.scatter(X[medians[2],0],X[medians[2],1], c=label_color, marker='^', s=15*size, edgecolors='black')
+plt.scatter(X[medians[1],0],X[medians[1],1], c=label_color, marker='s', s=10*size, edgecolors='black', linewidth=2)
+plt.scatter(X[medians[0],0],X[medians[0],1], c=label_color, marker='v', s=15*size, edgecolors='black', linewidth=2)
+plt.scatter(X[medians[2],0],X[medians[2],1], c=label_color, marker='^', s=15*size, edgecolors='black', linewidth=2)
 plt.axis('off')
 plt.axis('square')
 plt.savefig('figures/depth_'+dataset+'.pdf')

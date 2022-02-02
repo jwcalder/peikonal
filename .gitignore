@@ -1,3 +1,4 @@
 data/
 knn_data/
 trainsets/
+__pycache__/
