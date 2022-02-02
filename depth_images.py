@@ -7,7 +7,8 @@ import sys
 
 load_saved = True
 
-dataset = 'mnist'
+#dataset = 'mnist'
+dataset = 'fashionmnist'
 k = 10
 frac=0.05
 seed=0
@@ -51,7 +52,7 @@ for label in range(10):
         
         alpha = 1
         median, depth = peikonal_depth(G, kde, frac, alpha)
-        np.savez_compressed('digit%d_depth.npz'%label,median=median,depth=depth,knn_ind=knn_ind)
+        np.savez_compressed('depth_data/'+dataset+'_depth%d.npz'%label,median=median,depth=depth,knn_ind=knn_ind)
 
     depth = depth/np.max(depth)
     depth = 1-depth
@@ -63,7 +64,9 @@ for label in range(10):
     m_indx = ind_peikonal[0] 
     
     
-    neigh_num = 10
+    W = gl.weightmatrix.knn(None,k,knn_data=(knn_ind,np.ones_like(knn_ind)))
+    W = W.tocsr()
+    neigh_num = 20
     b_indx_up = b_indx
     pathID[label,0] = b_indx
     maxItt = 1e2
@@ -71,13 +74,14 @@ for label in range(10):
     cnt = 0
     while (dp < 1) and (cnt < maxItt):
         cnt += 1
-        xnId = knn_ind[b_indx_up,1:neigh_num]
+        #xnId = knn_ind[b_indx_up,1:neigh_num]
+        xnId = W[b_indx_up,:].nonzero()[1]
         wnId = depth[xnId]
         wnMx = np.argmax(wnId)
         b_indx_up = xnId[wnMx]
         pathID[label,cnt] = b_indx_up
         dp = depth[b_indx_up]
-    
+
     #Visualization
     for j in range(numw):
         img = X_sub[ind_boundary[j],:]
@@ -102,7 +106,6 @@ for label in range(10):
 
 f_bdy.savefig('figures/'+dataset+'_boundary.png')
 f_peikonal_median.savefig('figures/'+dataset+'_peikonal_median.png')
-plt.show()
 
 
 # path from boundary to median plots

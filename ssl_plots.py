@@ -16,6 +16,8 @@ markers = ['^','o','d','s','p','x','*']
 metric = 'vae' 
 k = 10 #Number of neighbors
 
+acc_alpha = {}
+
 for dataset in ['mnist','fashionmnist','cifar']:
 
     plt.figure()
@@ -30,11 +32,15 @@ for dataset in ['mnist','fashionmnist','cifar']:
     plt.plot(num_train,acc_mean,c=colors[0],marker=markers[0],label='Poisson Learning')
 
     c=1
-    for alpha in [0,3]:
+    acc_alpha[dataset] = np.zeros((2,4))
+    for alpha in range(4):
         num_train,acc_mean,acc_stddev,num_trials = gl.ssl.peikonal(p=1, alpha=alpha, class_priors=np.ones(10)).trials_statistics(tag=tag)
-        plt.plot(num_train,acc_mean[:,0],c=colors[c],marker=markers[c],linestyle='-',label='p-eikonal w/o priors ($p=1$,$\\alpha=%d$)'%alpha)
-        plt.plot(num_train,acc_mean[:,1],c=colors[c],marker=markers[c],linestyle='--',label='p-eikonal with priors ($p=1$,$\\alpha=%d$)'%alpha)
-        c += 1
+        acc_alpha[dataset][0,alpha] = acc_mean[0,0]
+        acc_alpha[dataset][1,alpha] = acc_mean[0,1]
+        if alpha in [0,3]:
+            plt.plot(num_train,acc_mean[:,0],c=colors[c],marker=markers[c],linestyle='-',label='$p$-eikonal w/o priors ($p=1$,$\\alpha=%d$)'%alpha)
+            plt.plot(num_train,acc_mean[:,1],c=colors[c],marker=markers[c],linestyle='--',label='p-eikonal with priors ($p=1$,$\\alpha=%d$)'%alpha)
+            c += 1
 
     for alpha in [3]:
         num_train,acc_mean,acc_stddev,num_trials = gl.ssl.graph_nearest_neighbor(alpha=alpha, class_priors=np.ones(10)).trials_statistics(tag=tag)
@@ -61,3 +67,44 @@ for dataset in ['mnist','fashionmnist','cifar']:
 
     #Save figures
     plt.savefig('./figures/ssl_' + dataset + '.pdf')
+
+
+plt.figure()
+alpha = np.arange(4)
+c=0
+for dataset in ['mnist','fashionmnist','cifar']:
+    name = dataset
+    name = name.replace('mnist','MNIST')
+    name = name.replace('fashion','Fashion')
+    name = name.replace('cifar','CIFAR-10')
+    plt.plot(alpha,acc_alpha[dataset][0,:] - acc_alpha[dataset][0,0],c=colors[c],marker=markers[c],linestyle='-',label=name+' w/o priors')
+    plt.plot(alpha,acc_alpha[dataset][1,:] - acc_alpha[dataset][1,0],c=colors[c],marker=markers[c],linestyle='--',label=name+' with priors')
+    c += 1
+
+plt.xlabel('$\\alpha$',fontsize=label_fontsize)
+plt.ylabel('Change in accuracy (%)',fontsize=label_fontsize)
+plt.legend(loc='lower left',fontsize=legend_fontsize)
+plt.tight_layout()
+plt.grid(True)
+
+plt.savefig('./figures/ssl_alphacomp.pdf')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
