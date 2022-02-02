@@ -3,13 +3,14 @@ import graphlearning as gl
 import matplotlib.pyplot as plt
 import sklearn.datasets as datasets
 
-size = 20
+size = 30
 vmin = 0
-vmax = 1
+vmax = 1.5
 #cmap = 'Paired'
 #cmap = 'Dark2'
 #cmap = 'copper'
-cmap = 'winter'
+#cmap = 'winter'
+cmap = 'viridis'
 label_color = 'r'
 marker = "^"
 
@@ -34,12 +35,12 @@ for alpha in [-1,0,1]:
 
         plt.figure()
         plt.scatter(X[:,0],X[:,1], c=pred_labels, s=size, cmap=cmap, vmin=vmin, vmax=vmax)
-        plt.scatter(X[train_ind,0],X[train_ind,1], c=label_color, s=5*size, marker=marker, edgecolors='black')
+        plt.scatter(X[train_ind,0],X[train_ind,1], c=label_color, s=10*size, marker=marker, edgecolors='black')
         plt.axis('off')
         plt.savefig('figures/twomoons_priors_%.2f_%d_%d.pdf'%(accuracy,seed,alpha))
 
         plt.figure()
         plt.scatter(X[:,0],X[:,1], c=pred_labels_wo, s=size, cmap=cmap, vmin=vmin, vmax=vmax)
-        plt.scatter(X[train_ind,0],X[train_ind,1], c=label_color, s=5*size, marker=marker, edgecolors='black')
+        plt.scatter(X[train_ind,0],X[train_ind,1], c=label_color, s=10*size, marker=marker, edgecolors='black')
         plt.axis('off')
         plt.savefig('figures/twomoons_nopriors%.2f_%d_%d.pdf'%(accuracy_wo,seed,alpha))
