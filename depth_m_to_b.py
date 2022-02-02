@@ -5,7 +5,7 @@ import sklearn.datasets as datasets
 from utils import peikonal_depth
 import sys
 
-load_saved = False
+load_saved = True
 
 dataset = 'mnist'
 k = 10
@@ -35,7 +35,7 @@ for label in range(10):
     num = X_sub.shape[0]
 
     if load_saved:
-        M = np.load('digit%d_depth.npz'%label)
+        M = np.load('depth_data/'+dataset+'_depth%d.npz'%label)
         depth=M['depth']
         median=M['median']
         knn_ind=M['knn_ind']
@@ -100,8 +100,8 @@ for label in range(10):
 
 
 
-f_bdy.savefig(dataset+'_boundary.pdf')
-f_peikonal_median.savefig(dataset+'_peikonal_median.pdf')
+f_bdy.savefig('figures/'+dataset+'_boundary.png')
+f_peikonal_median.savefig('figures/'+dataset+'_peikonal_median.png')
 plt.show()
 
 
@@ -152,7 +152,7 @@ for label in range(10):
         axarr_peikonal_path[label,j].axis('off')
         axarr_peikonal_path[label,j].set_aspect('equal')
         
-f_peikonal_path.savefig(dataset+'_peikonal_path.pdf')
+f_peikonal_path.savefig('figures/'+dataset+'_peikonal_path.png')
 plt.show()
 
 
