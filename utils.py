@@ -25,17 +25,22 @@ def half_moon(n, shift=0.4):
     return X
 
 def half_helix(n):
+    noiseID = 1
     X = np.zeros((n,3))
+    noiseVal = np.zeros((3,n))
+    if (noiseID == 1):
+        noiseVal[0,:] = np.random.normal(0, 0.05, n)
+        noiseVal[1,:] = np.random.normal(0, 0.05, n)
+        noiseVal[2,:] = np.random.normal(0, 0.05, n)
     t = 0
     dt = 2*np.pi/n
     num_pts = 0
     while num_pts < n:
-        X[num_pts,0] = np.sin(t)
-        X[num_pts,1] = np.cos(t)
-        X[num_pts,2] = t
+        X[num_pts,0] = np.sin(t) + noiseVal[0,num_pts]
+        X[num_pts,1] = np.cos(t) + noiseVal[1,num_pts]
+        X[num_pts,2] = t + noiseVal[2,num_pts]
         t += dt
-        num_pts += 1
-        
+        num_pts += 1 
     return X
 
 
