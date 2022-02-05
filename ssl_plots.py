@@ -4,10 +4,16 @@ import matplotlib
 import numpy as np
 
 #General plot settings
-legend_fontsize = 12
+legend_fontsize = 14
 label_fontsize = 16
 fontsize = 16
-matplotlib.rcParams.update({'font.size': fontsize})
+#matplotlib.rcParams.update({'font.size': fontsize})
+plt.rcParams.update({
+    "text.usetex": True,
+    "font.family": "serif",
+    "font.sans-serif": ["Helvetica"],
+    "font.size": 14})
+
 styles = ['^b-','or-','dg-','sk-','pm-','xc-','*y-']
 
 colors = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728','#9467bd', '#8c564b', '#e377c2', '#7f7f7f','#bcbd22', '#17becf']
@@ -60,7 +66,7 @@ for dataset in ['mnist','fashionmnist','cifar']:
         plt.ylim((20,55))
 
     plt.xlabel('Number of labels',fontsize=label_fontsize)
-    plt.ylabel('Accuracy (%)',fontsize=label_fontsize)
+    plt.ylabel('Accuracy (\\%)',fontsize=label_fontsize)
     plt.legend(loc='lower right',fontsize=legend_fontsize)
     plt.tight_layout()
     plt.grid(True)
@@ -82,7 +88,7 @@ for dataset in ['mnist','fashionmnist','cifar']:
     c += 1
 
 plt.xlabel('$\\alpha$',fontsize=label_fontsize)
-plt.ylabel('Change in accuracy (%)',fontsize=label_fontsize)
+plt.ylabel('Change in accuracy (\\%)',fontsize=label_fontsize)
 plt.legend(loc='lower left',fontsize=legend_fontsize)
 plt.tight_layout()
 plt.grid(True)
