@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2020.9.9)  1 FEB 2022 15:48
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2020.9.9)  8 FEB 2022 15:38
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -144,12 +144,12 @@ Here is how much of TeX's memory you used:
  16516 multiletter control sequences out of 15000+600000
  537829 words of font info for 35 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 30i,7n,34p,242b,351s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 30i,7n,34p,243b,351s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-t1.enc}</usr/share/texmf/
 fonts/type1/public/cm-super/sfbx0900.pfb></usr/share/texmf/fonts/type1/public/c
 m-super/sfcc0900.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1000.pfb
 ></usr/share/texmf/fonts/type1/public/cm-super/sfxc0900.pfb>
-Output written on SSL_fashionmnist.pdf (1 page, 64157 bytes).
+Output written on SSL_fashionmnist.pdf (1 page, 65267 bytes).
 PDF statistics:
  25 PDF objects out of 1000 (max. 8388607)
  17 compressed objects within 1 object stream
