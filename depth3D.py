@@ -16,9 +16,9 @@ seed=0
 alpha=1
 eps = 1
 
-#dataset = 'sphere'
+dataset = 'sphere'
 #dataset = 'helix'
-dataset = 'swissroll'
+#dataset = 'swissroll'
 
 np.random.seed(seed)
 if dataset == 'helix':

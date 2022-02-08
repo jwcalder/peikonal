@@ -33,7 +33,7 @@ for dataset in ['mnist', 'fashionmnist', 'cifar']:
 
     #Run experiments 
     for model in model_list:
-        model.ssl_trials(trainsets, labels, num_cores=20, tag=tag, num_trials=60)
+        model.ssl_trials(trainsets, labels, num_cores=20, tag=tag)
 
     gl.ssl.accuracy_table(model_list, tag=tag, savefile='tables/SSL_'+dataset+'.tex', title="SSL Comparison: "+dataset,append=False)
 

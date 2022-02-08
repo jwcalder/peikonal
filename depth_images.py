@@ -5,15 +5,11 @@ import sklearn.datasets as datasets
 from utils import peikonal_depth
 import sys
 
-load_saved = True
-
 #dataset = 'mnist'
 dataset = 'fashionmnist'
 k = 10
 frac=0.05
-seed=0
-alpha=1
-eps = 1
+alpha=2
 
 #Plotting
 numw = 16
@@ -35,24 +31,16 @@ for label in range(10):
     X_sub = X[labels==label,:]
     num = X_sub.shape[0]
 
-    if load_saved:
-        M = np.load('depth_data/'+dataset+'_depth%d.npz'%label)
-        depth=M['depth']
-        median=M['median']
-        knn_ind=M['knn_ind']
-    else:
-        #KNN search
-        knn_ind, knn_dist = gl.weightmatrix.knnsearch(X_sub,5*k)
-        W = gl.weightmatrix.knn(X_sub,k,knn_data=(knn_ind,knn_dist))
-        G = gl.graph(W)
-        if not G.isconnected():
-            sys.exit('Graph is not connected')
-        d = np.max(knn_dist,axis=1)
-        kde = (d/d.max())**(-1)
-        
-        alpha = 1
-        median, depth = peikonal_depth(G, kde, frac, alpha)
-        np.savez_compressed('depth_data/'+dataset+'_depth%d.npz'%label,median=median,depth=depth,knn_ind=knn_ind)
+    #KNN search
+    knn_ind, knn_dist = gl.weightmatrix.knnsearch(X_sub,5*k)
+    W = gl.weightmatrix.knn(X_sub,k,knn_data=(knn_ind,knn_dist))
+    G = gl.graph(W)
+    if not G.isconnected():
+        sys.exit('Graph is not connected')
+    d = np.max(knn_dist,axis=1)
+    kde = (d/d.max())**(-1)
+    
+    median, depth = peikonal_depth(G, kde, frac, alpha)
 
     depth = depth/np.max(depth)
     depth = 1-depth

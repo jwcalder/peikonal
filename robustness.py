@@ -4,8 +4,8 @@ import matplotlib.pyplot as plt
 from utils import peikonal_depth
 import sys
 
-size = 5
-mult = 15
+size = 3
+mult = 20
 label_color = 'w'
 
 marker = 's'

@@ -24,8 +24,7 @@ def half_moon(n, shift=0.4):
 
     return X
 
-def half_helix(n):
-    noiseID = 1
+def half_helix(n, noiseID=0):
     X = np.zeros((n,3))
     noiseVal = np.zeros((3,n))
     if (noiseID == 1):

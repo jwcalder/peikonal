@@ -15,9 +15,9 @@ alpha=2
 n=1000
 eps = 1
 
-dataset = 'gaussian'
+#dataset = 'gaussian'
 #dataset = 'moon'
-#dataset = 'mixture'
+dataset = 'mixture'
 
 np.random.seed(seed)
 if dataset == 'gaussian':

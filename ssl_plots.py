@@ -4,7 +4,7 @@ import matplotlib
 import numpy as np
 
 #General plot settings
-legend_fontsize = 14
+legend_fontsize = 12
 label_fontsize = 16
 fontsize = 16
 #matplotlib.rcParams.update({'font.size': fontsize})
@@ -45,23 +45,20 @@ for dataset in ['mnist','fashionmnist','cifar']:
         acc_alpha[dataset][1,alpha] = acc_mean[0,1]
         if alpha in [0,3]:
             plt.plot(num_train,acc_mean[:,0],c=colors[c],marker=markers[c],linestyle='-',label='$p$-eikonal w/o priors ($p=1$,$\\alpha=%d$)'%alpha)
-            plt.plot(num_train,acc_mean[:,1],c=colors[c],marker=markers[c],linestyle='--',label='p-eikonal with priors ($p=1$,$\\alpha=%d$)'%alpha)
+            plt.plot(num_train,acc_mean[:,1],c=colors[c],marker=markers[c],linestyle='--',label='$p$-eikonal with priors ($p=1$,$\\alpha=%d$)'%alpha)
             c += 1
 
     for alpha in [3]:
         num_train,acc_mean,acc_stddev,num_trials = gl.ssl.graph_nearest_neighbor(alpha=alpha, class_priors=np.ones(10)).trials_statistics(tag=tag)
-    #    plt.plot(num_train,acc_mean[:,0],c=colors[c],marker=markers[c],linestyle='-',label='GNN w/o priors ($p=1$,$\\alpha=%d$)'%alpha)
-        plt.plot(num_train,acc_mean[:,1],c=colors[c],marker=markers[c],linestyle='--',label='GNN with priors ($p=1$,$\\alpha=%d$)'%alpha)
+        plt.plot(num_train,acc_mean[:,0],c=colors[c],marker=markers[c],linestyle='-',label='eikonal w/o priors ($p=1$,$\\alpha=%d$)'%alpha)
+        plt.plot(num_train,acc_mean[:,1],c=colors[c],marker=markers[c],linestyle='--',label='eikonal with priors ($p=1$,$\\alpha=%d$)'%alpha)
         c += 1
 
 
-    #for alpha in range(4):
-    #    model_list += [gl.ssl.graph_nearest_neighbor(W, D=D, alpha=alpha, class_priors=priors)]
-
     if dataset == 'mnist':
-        plt.ylim((50,100))
+        plt.ylim((40,100))
     if dataset == 'fashionmnist':
-        plt.ylim((40,72))
+        plt.ylim((30,75))
     if dataset == 'cifar':
         plt.ylim((20,55))
 
