@@ -61,13 +61,3 @@ for num_corr in [0,1,5,10,50]:
     plt.savefig('figures/robustness_dijkstra_%d.png'%num_corr, dpi=300)
 
 
-#plt.figure()
-#plt.scatter(X[:,0],X[:,1], s=size, c=depth)
-#plt.scatter(X[medians[1],0],X[medians[1],1], c=label_color, marker='s', s=10*size, edgecolors='black', linewidth=2)
-#plt.scatter(X[medians[0],0],X[medians[0],1], c=label_color, marker='v', s=15*size, edgecolors='black', linewidth=2)
-#plt.scatter(X[medians[2],0],X[medians[2],1], c=label_color, marker='^', s=15*size, edgecolors='black', linewidth=2)
-#plt.axis('off')
-#plt.axis('square')
-#plt.savefig('figures/depth_'+dataset+'.pdf')
-
-
