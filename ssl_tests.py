@@ -1,7 +1,7 @@
 import graphlearning as gl
 
 metric = 'vae' 
-k = 10 #Number of neighbors
+k = 20 #Number of neighbors
 
 for dataset in ['mnist', 'fashionmnist', 'cifar']:
 

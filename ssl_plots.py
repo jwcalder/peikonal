@@ -20,7 +20,7 @@ colors = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728','#9467bd', '#8c564b', '#e37
 markers = ['^','o','d','s','p','x','*']
 
 metric = 'vae' 
-k = 10 #Number of neighbors
+k = 20 #Number of neighbors
 
 acc_alpha = {}
 
@@ -56,7 +56,7 @@ for dataset in ['mnist','fashionmnist','cifar']:
 
 
     if dataset == 'mnist':
-        plt.ylim((40,100))
+        plt.ylim((33,100))
     if dataset == 'fashionmnist':
         plt.ylim((30,75))
     if dataset == 'cifar':
