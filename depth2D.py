@@ -15,9 +15,9 @@ alpha=2
 n=1000
 eps = 1
 
-#dataset = 'gaussian'
+dataset = 'gaussian'
 #dataset = 'moon'
-dataset = 'mixture'
+#dataset = 'mixture'
 
 np.random.seed(seed)
 if dataset == 'gaussian':
@@ -52,6 +52,7 @@ for k, alpha in enumerate([-1,0,1]):
     plt.axis('off')
     plt.axis('square')
     plt.savefig('figures/depth_'+dataset+'_alpha%d.pdf'%alpha)
+    plt.savefig('figures/depth_'+dataset+'_alpha%d.png'%alpha,dpi=300)
 
 plt.figure()
 plt.scatter(X[:,0],X[:,1], s=size, c=depth)
@@ -61,5 +62,6 @@ plt.scatter(X[medians[2],0],X[medians[2],1], c=label_color, marker='^', s=15*siz
 plt.axis('off')
 plt.axis('square')
 plt.savefig('figures/depth_'+dataset+'.pdf')
+plt.savefig('figures/depth_'+dataset+'.png',dpi=300)
 
 

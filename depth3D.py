@@ -16,9 +16,9 @@ seed=0
 alpha=1
 eps = 1
 
-dataset = 'sphere'
+#dataset = 'sphere'
 #dataset = 'helix'
-#dataset = 'swissroll'
+dataset = 'swissroll'
 
 np.random.seed(seed)
 if dataset == 'helix':
@@ -53,3 +53,4 @@ if dataset=='swissroll':
     ax.view_init(4,-77)
 plt.axis('off')
 plt.savefig('figures/depth_'+dataset+'.pdf')
+plt.savefig('figures/depth_'+dataset+'.png',dpi=300)

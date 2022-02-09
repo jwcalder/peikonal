@@ -46,6 +46,7 @@ for num_corr in [0,1,5,10,50]:
         for j in points:
             plt.scatter(X[j,0],X[j,1], c=label_color, marker=marker, s=mult*size, edgecolors='black', linewidth=2)
     plt.savefig('figures/robustness_peikonal_%d.pdf'%num_corr)
+    plt.savefig('figures/robustness_peikonal_%d.png'%num_corr, dpi=300)
 
     depth = G.dijkstra([0],f=1)
     depth = depth/np.max(depth); depth = 1-depth
@@ -57,6 +58,7 @@ for num_corr in [0,1,5,10,50]:
         for j in points:
             plt.scatter(X[j,0],X[j,1], c=label_color, marker=marker, s=mult*size, edgecolors='black', linewidth=2)
     plt.savefig('figures/robustness_dijkstra_%d.pdf'%num_corr)
+    plt.savefig('figures/robustness_dijkstra_%d.png'%num_corr, dpi=300)
 
 
 #plt.figure()
