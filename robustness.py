@@ -3,8 +3,9 @@ import graphlearning as gl
 import matplotlib.pyplot as plt
 from utils import peikonal_depth
 import sys
+from mayavi import mlab
 
-size = 3
+size = 10
 mult = 20
 label_color = 'w'
 
@@ -12,52 +13,63 @@ marker = 's'
 frac=0.05
 seed=0
 alpha=2
-n=5000
+n=20000
 eps = 0.05
-delta = 0.1
 p = 1
 
 np.random.seed(seed)
 X = gl.utils.rand_ball(n,2)
-X[0,:] = [0,0]
+Tri = gl.utils.mesh(X)
 Wc = gl.weightmatrix.epsilon_ball(X,eps,kernel='uniform')
 if not gl.graph(Wc).isconnected():
     sys.exit('Graph is not connected')
 
+bdy = np.linalg.norm(X,axis=1) > 1-eps
 
 Wc = Wc.tolil()
-for num_corr in [0,1,5,10,50]:
+for num_corr in [0,10,20,50,100,200,500,1000]:
     
     W = Wc.copy()
     if num_corr > 0:
-        points = np.random.choice(n,size=num_corr)
-        for j in points: 
-            W[0,j]=delta; W[j,0]=delta
-
+        p1 = np.random.choice(n,size=num_corr)
+        p2 = np.random.choice(n,size=num_corr)
+        for j in range(len(p1)): 
+            W[p1[j],p2[j]]+=1; W[p2[j],p1[j]]+=1
     G = gl.graph(W)
+
     deg = G.degree_vector()
-    depth = G.peikonal([0],f=deg,p=p)
-    depth = depth/np.max(depth); depth = 1-depth
+    depth = G.peikonal(bdy,f=deg,p=p)
     plt.figure()
     plt.scatter(X[:,0],X[:,1], s=size, c=depth)
+    plt.scatter(X[bdy,0],X[bdy,1], s=size, c='red')
     plt.axis('off')
     plt.axis('square')
-    if num_corr > 0:
-        for j in points:
-            plt.scatter(X[j,0],X[j,1], c=label_color, marker=marker, s=mult*size, edgecolors='black', linewidth=2)
     plt.savefig('figures/robustness_peikonal_%d.pdf'%num_corr)
     plt.savefig('figures/robustness_peikonal_%d.png'%num_corr, dpi=300)
 
-    depth = G.dijkstra([0],f=1)
-    depth = depth/np.max(depth); depth = 1-depth
+    mlab.figure(bgcolor=(1,1,1))
+    mlab.triangular_mesh(X[:,0],X[:,1],depth/60,Tri)
+    mlab.savefig('figures/robustness_peikonal_%d_mlab.png'%num_corr,size=(100,100))
+    mlab.close()
+
+    W = Wc.copy()
+    if num_corr > 0:
+        for j in range(len(p1)): 
+            W[p1[j],p2[j]]+=1; W[p2[j],p1[j]]+=1
+    G = gl.graph(W)
+
+    depth = G.dijkstra(bdy,f=1)
     plt.figure()
     plt.scatter(X[:,0],X[:,1], s=size, c=depth)
+    plt.scatter(X[bdy,0],X[bdy,1], s=size, c='red')
     plt.axis('off')
     plt.axis('square')
-    if num_corr > 0:
-        for j in points:
-            plt.scatter(X[j,0],X[j,1], c=label_color, marker=marker, s=mult*size, edgecolors='black', linewidth=2)
     plt.savefig('figures/robustness_dijkstra_%d.pdf'%num_corr)
     plt.savefig('figures/robustness_dijkstra_%d.png'%num_corr, dpi=300)
+
+    mlab.figure(bgcolor=(1,1,1))
+    mlab.triangular_mesh(X[:,0],X[:,1],depth/13,Tri)
+    mlab.savefig('figures/robustness_dijkstra_%d_mlab.png'%num_corr,size=(100,100))
+    mlab.close()
 
 

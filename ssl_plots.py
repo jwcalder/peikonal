@@ -56,7 +56,7 @@ for dataset in ['mnist','fashionmnist','cifar']:
 
 
     if dataset == 'mnist':
-        plt.ylim((33,100))
+        plt.ylim((30,100))
     if dataset == 'fashionmnist':
         plt.ylim((30,75))
     if dataset == 'cifar':
@@ -91,6 +91,80 @@ plt.tight_layout()
 plt.grid(True)
 
 plt.savefig('./figures/ssl_alphacomp.pdf')
+
+
+plt.figure()
+pvals = np.arange(1,5)
+c=0
+for dataset in ['mnist','fashionmnist','cifar']:
+    name = dataset
+    name = name.replace('mnist','MNIST')
+    name = name.replace('fashion','Fashion')
+    name = name.replace('cifar','CIFAR-10')
+
+    if dataset == 'cifar':
+        metric = 'aet'
+    else:
+        metric = 'vae'
+
+    tag = dataset + '_' + metric + '_k%d'%k
+    acc = np.zeros((2,len(pvals)))
+    for i,p in enumerate(pvals):
+        num_train,acc_mean,acc_stddev,num_trials = gl.ssl.peikonal(p=p, alpha=3, class_priors=np.ones(10)).trials_statistics(tag=tag)
+        acc[0,i] = acc_mean[0,0]
+        acc[1,i] = acc_mean[0,1]
+    plt.plot(pvals,acc[0,:] - acc[0,0],c=colors[c],marker=markers[c],linestyle='-',label=name+' w/o priors')
+    plt.plot(pvals,acc[1,:] - acc[1,0],c=colors[c],marker=markers[c],linestyle='--',label=name+' with priors')
+    c += 1
+
+plt.xlabel('$p$',fontsize=label_fontsize)
+plt.ylabel('Change in accuracy (\\%)',fontsize=label_fontsize)
+plt.legend(loc='lower left',fontsize=legend_fontsize)
+plt.tight_layout()
+plt.grid(True)
+
+plt.savefig('./figures/ssl_pval_comp.pdf')
+
+
+
+plt.figure()
+pvals = np.arange(1,5)
+c=0
+for dataset in ['mnist','fashionmnist','cifar']:
+    name = dataset
+    name = name.replace('mnist','MNIST')
+    name = name.replace('fashion','Fashion')
+    name = name.replace('cifar','CIFAR-10')
+
+    if dataset == 'cifar':
+        metric = 'aet'
+    else:
+        metric = 'vae'
+
+    tag = dataset + '_' + metric + '_k%d'%k
+    num_train,acc_mean,acc_stddev,num_trials = gl.ssl.peikonal(p=2, alpha=3, class_priors=np.ones(10)).trials_statistics(tag=tag)
+    plt.plot(num_train,acc_mean[:,0],c=colors[c],marker=markers[c],linestyle='-',label=name+' w/o priors')
+    plt.plot(num_train,acc_mean[:,1],c=colors[c],marker=markers[c],linestyle='--',label=name+' with priors')
+    c += 1
+
+plt.xlabel('Number of labels',fontsize=label_fontsize)
+plt.ylabel('Accuracy (\\%)',fontsize=label_fontsize)
+plt.legend(loc='lower right',fontsize=legend_fontsize)
+plt.tight_layout()
+plt.grid(True)
+plt.savefig('./figures/ssl_p2_comp.pdf')
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

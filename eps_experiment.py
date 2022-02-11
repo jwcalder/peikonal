@@ -3,6 +3,7 @@ import graphlearning as gl
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 import sys
+import mayavi.mlab as mlab
 
 ecolor = 0.4
 linewidth = 0
@@ -32,4 +33,10 @@ for p in [1,2,4]:
         plt.tight_layout()
         plt.savefig('figures/cone_eps_%.2f_p_%d.png'%(eps,p),dpi=300)
 
+        depth = depth/depth.max()
+        depth = 1-depth
+        mlab.figure(bgcolor=(1,1,1))
+        mlab.triangular_mesh(X[:,0],X[:,1],depth,Tri)
+        mlab.savefig('figures/cone_eps_%.2f_p_%d_mlab.png'%(eps,p),size=(100,100))
+        mlab.close()
 

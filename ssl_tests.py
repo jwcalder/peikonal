@@ -28,8 +28,12 @@ for dataset in ['mnist', 'fashionmnist', 'cifar']:
     for alpha in range(4):
         model_list += [gl.ssl.peikonal(W, D=D, p=1, alpha=alpha, class_priors=priors)]
 
+    for p in [2,3,4]:
+        model_list += [gl.ssl.peikonal(W, D=D, p=p, alpha=3, class_priors=priors)]
+
+    WD = gl.weightmatrix.knn(dataset, k, metric=metric, kernel='distance')
     for alpha in range(4):
-        model_list += [gl.ssl.graph_nearest_neighbor(W, D=D, alpha=alpha, class_priors=priors)]
+        model_list += [gl.ssl.graph_nearest_neighbor(WD, D=D, alpha=alpha, class_priors=priors)]
 
     #Run experiments 
     for model in model_list:
