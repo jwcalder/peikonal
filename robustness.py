@@ -37,8 +37,8 @@ for num_corr in [0,10,20,50,100,200,500,1000]:
             W[p1[j],p2[j]]+=1; W[p2[j],p1[j]]+=1
     G = gl.graph(W)
 
-    deg = G.degree_vector()
-    depth = G.peikonal(bdy,f=deg,p=p)
+    #deg = G.degree_vector()
+    depth = G.peikonal(bdy,p=p)
     plt.figure()
     plt.scatter(X[:,0],X[:,1], s=size, c=depth)
     plt.scatter(X[bdy,0],X[bdy,1], s=size, c='red')
@@ -48,7 +48,7 @@ for num_corr in [0,10,20,50,100,200,500,1000]:
     plt.savefig('figures/robustness_peikonal_%d.png'%num_corr, dpi=300)
 
     mlab.figure(bgcolor=(1,1,1))
-    mlab.triangular_mesh(X[:,0],X[:,1],depth/60,Tri)
+    mlab.triangular_mesh(X[:,0],X[:,1],depth*5/6,Tri)
     mlab.savefig('figures/robustness_peikonal_%d_mlab.png'%num_corr,size=(100,100))
     mlab.close()
 
