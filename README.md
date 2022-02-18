@@ -1,4 +1,4 @@
-# peikonal
+# Hamilton-Jacobi equations on graphs
 
 The code in this repository reproduces the experimental results with the p-eikonal equation for semi-supervised learning and data depth from our paper 
 
